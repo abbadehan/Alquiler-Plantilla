@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/plantilla/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <ui:define name="title"> Modificar DVD
+        <ui:insert name="inicio"/>
+    </ui:define>
+
+    <ui:define name="top">
+        <h3> Bienvenido </h3>
+    </ui:define>
+
+    <ui:define name="left">
+        <ui:include src="WEB-INF/plantilla/menu.xhtml"/>
+        
+    </ui:define>
+
+    <ui:define name="content">
+       <h:link value="Lista de discos" outcome="tienda.xhtml" />
+        <h1><h:outputLabel rendered="#{alquilar.modoNuevo}" value=" Alta nuevo DVD" />
+            <h:outputLabel rendered="#{not alquilar.modoNuevo}" value="Modificar DVD #{alquilar.itemActual.titulo}" />
+        </h1>
+
+        <h:form id="formDvd">
+
+            <h:panelGrid  bgcolor="orange">
+                <h:outputLabel value="Id "/>
+                <h:inputText  id="id" value="#{ alquilar.itemActual.id }" required="true" requiredMessage="el id es necesario" validatorMessage="el numero debe ser mayor que 0">
+                    <h:message for="id" />
+
+
+                    <f:validateLongRange minimum="1"/>
+                </h:inputText>
+                <h:outputLabel value="Titulo "/>
+                <h:inputText id="titulo" value="#{ alquilar.itemActual.titulo }" required="true" requiredMessage="es obligatorio el titulo" validatorMessage="el texo no puede superar los 30 caracteres">
+                    <h:message for="titulo"/>
+                    <f:validateLength maximum="30"/>
+                </h:inputText>
+                <h:outputLabel value="Genero"/>
+                <h:selectOneMenu value="#{ alquilar.itemActual.genero }">
+
+                    <f:selectItems  value="#{app.genero}"  />
+                    <f:selectItem itemValue="otra" itemLabel="otra categoria"  />
+
+                </h:selectOneMenu>
+              
+                <h:outputLabel value="alquilado" rendered="#{not alquilar.modoNuevo}"/>
+                <h:selectBooleanCheckbox value="#{ alquilar.itemActual.alquilado }" rendered="#{not alquilar.modoNuevo}"/>
+            </h:panelGrid>
+            <h:commandButton action="#{ alquilar.guardar() }" value="#{alquilar.modoNuevo? 'CREAR':'MODIFICAR'}"   styleClass="btn btn-danger" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>

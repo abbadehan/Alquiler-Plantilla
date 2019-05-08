@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   
+    <h:head>
+        <title>Lista de CDs</title>
+    </h:head>
+    <h:body>
+        
+         <h1>Lista CDs</h1>
+
+
+
+         <h:dataTable value="#{ alquilar.getcd}" var="productos" border="1">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                    #{DVDItem.id}
+                <f:facet name="footer">.</f:facet>
+                </h:column>
+             <h:column>
+                <f:facet name="header">Titulo</f:facet>
+                    #{DVDItem.titulo}
+                <f:facet name="footer">.</f:facet>
+                </h:column>
+             <h:column>
+                <f:facet name="header">genero</f:facet>
+                    #{DVDItem.genero}
+                <f:facet name="footer">.</f:facet>
+            </h:column>
+             <h:column>
+                <f:facet name="header">alquilado</f:facet>
+                    #{DVDItem.alquilado}
+                <f:facet name="footer">.</f:facet>
+            </h:column>
+        </h:dataTable>
+        <br/>
+      
+
+    </h:body>
+      
+</html>
+
