@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 /**
@@ -97,13 +99,29 @@ public class AlquilarManagedBean implements Serializable {
         return "edita";
     }
     public String guardar(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+    
         if(modoNuevo){
-            //añadir el item a map
-            appManagedBean.getCd().put(itemActual.getId(), itemActual);
-        }else {
-            //modificar 
+             //validar que el id no existe ya
+            if(existe(itemActual.getId())){
+                fc.addMessage(null,
+                        new FacesMessage("No se pudo guardar el nuevo DVD. El id ya existe."));
+                return "edita";
+            }else{//añadir el item a map
+                appManagedBean.getCd().put(itemActual.getId() , itemActual);
+                fc.addMessage(null, new FacesMessage("Se ha añadido el nuevo DVD."));
+            }
+        }else{
+            //modificar
             appManagedBean.getCd().put(itemActual.getId() , itemActual);
+            fc.addMessage(null, 
+                    new FacesMessage("Se ha modificado el DVD con éxito."));
         }
         return "alquila";
+    }
+     private boolean existe(int id){
+        boolean existe = false;
+        existe = appManagedBean.getCd().containsKey(id);
+        return existe;
     }
 }
